@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "~/stores/store";
+import { useAuthStore } from "~/store";
 import { storeToRefs } from "pinia";
 
 const router = useRouter();
