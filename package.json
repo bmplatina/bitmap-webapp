@@ -6,7 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "nuxt build && nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "@pinia/nuxt": "0.9.0",
     "axios": "^1.7.9",
     "dayjs-nuxt": "2.1.11",
+    "mysql2": "^3.12.0",
     "nuxt": "^3.15.4",
     "pinia": "^2.3.0",
     "vue": "latest",
