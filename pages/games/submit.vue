@@ -2,7 +2,7 @@
 import { reactive, ref, onMounted } from "vue";
 import type { Game } from "~/interfaces/Games";
 import axios from "axios";
-// import { MdEditor, MdPreview, MdCatalog } from "md-editor-v3";
+import { MdEditor, MdPreview, MdCatalog } from "md-editor-v3";
 import { useI18n } from 'vue-i18n';
 import { useDayjs } from "#dayjs";
 
@@ -253,5 +253,5 @@ onMounted(() => {
 </template>
 
 <style lang="postcss">
-/* @import 'md-editor-v3/lib/style.css'; */
+@import 'md-editor-v3/lib/style.css';
 </style>
