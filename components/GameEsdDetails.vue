@@ -1,9 +1,13 @@
 <script setup lang="ts">
 // Libraries
-import { onMounted, ref, computed } from 'vue'
+import { ref } from 'vue'
 import type { Game } from "~/interfaces/Games";
 import { useI18n } from 'vue-i18n';
 import { useDayjs } from "#dayjs";
+import { useDisplay } from "vuetify";
+
+// 반응형 상태 가져오기
+const { mobile } = useDisplay();
 
 const dayjs = useDayjs();
 const { locale, t } = useI18n();
@@ -84,8 +88,16 @@ let bIsDetailModalOpened = ref(false);
       </v-card-title>
       <v-divider />
 
-      <v-row style="height: 80%;" class="d-flex">
-        <v-col cols="3" class="d-flex flex-column align-items-center">
+      <v-row
+          style="height: 80%;"
+          class="d-flex"
+          :class="mobile ? 'flex-column' : 'flex-row'"
+      >
+        <!-- 게임 이미지 및 정보 -->
+        <v-col
+            :cols="mobile ? 12 : 3"
+            class="d-flex flex-column align-items-center"
+        >
           <div>
             <v-img
                 class="rounded-xl mx-auto"
@@ -93,19 +105,33 @@ let bIsDetailModalOpened = ref(false);
                 lazy-src="/images/unknownImage.png"
                 :alt="gameObject.gameTitle"
                 :max-width="240"
-                style="margin-top: calc(4% + 16px)"
+                style="margin-top: calc(4% + 16px);"
             ></v-img>
             <div class="d-flex justify-center align-center mt-5 w-100">
               <h2 class="text-h5 mr-2">{{ gameObject.gameTitle }}</h2>
-              <p v-if="gameObject.isEarlyAccess" class="mb-0">{{ t('early-access') }}</p>
+              <p v-if="gameObject.isEarlyAccess" class="mb-0">
+                {{ t("early-access") }}
+              </p>
             </div>
           </div>
         </v-col>
 
-        <v-divider vertical style="margin-top: 12px; margin-bottom: 12px"></v-divider>
+        <!-- 구분선 (모바일에서는 제거) -->
+        <v-divider
+            v-if="!mobile"
+            vertical
+            style="margin-top: 12px; margin-bottom: 12px"
+        ></v-divider>
 
-        <v-col cols="9" style="display: flex; flex-direction: column; height: 100%;" class="align-center">
-          <div style="flex: 1; overflow-y: auto; margin-top: 4%; margin-bottom: 1%; margin-left: 4%; margin-right: 4%;">
+        <!-- 게임 상세 정보 -->
+        <v-col
+            :cols="mobile ? 12 : 9"
+            class="align-center"
+            style="display: flex; flex-direction: column; height: 100%;"
+        >
+          <div
+              style="flex: 1; overflow-y: auto; margin-top: 4%; margin-bottom: 1%; margin-left: 4%; margin-right: 4%;"
+          >
             <v-card
                 class="mt-4 pa-3 rounded-xl"
                 :title="t('preview')"
@@ -115,13 +141,15 @@ let bIsDetailModalOpened = ref(false);
               <iframe
                   :src="`https://youtube.com/embed/${props.gameObject.gameVideoURL}`"
                   class="mx-auto"
-                  frameborder="0" allowfullscreen
+                  frameborder="0"
+                  allowfullscreen
                   sandbox="allow-scripts allow-same-origin allow-presentation"
-                  style="width: 512px; height: 288px; margin-top: 4%"
+                  style="width: 100%; max-width: 512px; height: 288px; margin-top: 4%;"
                   referrerpolicy="no-referrer"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               ></iframe>
             </v-card>
+
             <v-card
                 class="mt-4 pa-3 rounded-xl"
                 :title="locale === 'ko' ? `${gameObject.gameTitle + t('information-of')}` : `${t('information-of') + gameObject.gameTitle}`"
@@ -138,6 +166,7 @@ let bIsDetailModalOpened = ref(false);
                 <a :href="gameObject.gameWebsite">{{ t('official-website') }}</a>
               </v-card-text>
             </v-card>
+
             <v-card
                 class="mt-4 pa-3 rounded-xl"
                 :title="gameObject.gameHeadline"
@@ -148,16 +177,11 @@ let bIsDetailModalOpened = ref(false);
                 <v-markdown-renderer :source="gameObject.gameDescription" />
               </v-card-text>
             </v-card>
-            <v-card
-                class="mt-4 pa-3 rounded-xl"
-                :title="t('system-requirements')"
-                variant="tonal"
-            >
-              <!-- Mac 지원 게임 -->
+
+            <v-card class="mt-4 pa-3 rounded-xl" :title="t('system-requirements')" variant="tonal">
               <v-card-text>
                 {{ t('macos-system-requirements').replace(/\\n/g, '\n') }}
               </v-card-text>
-              <!-- Windows 지원 게임 -->
               <v-card-text>
                 {{ t('windows-system-requirements').replace(/\\n/g, '\n') }}
               </v-card-text>
