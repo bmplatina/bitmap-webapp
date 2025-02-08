@@ -2,7 +2,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from 'vue-i18n';
-import { useAuthStore } from "~/store";
+import { useAuthStore, useSettingsStore } from "~/store";
 import { storeToRefs } from "pinia";
 
 const axios = useNuxtApp().$axios;
@@ -10,8 +10,8 @@ const axios = useNuxtApp().$axios;
 
 const router = useRouter();
 const { t } = useI18n();
-const authStore = useAuthStore();
-const { userName, userId, bIsLoggedIn } = storeToRefs(authStore);
+const { userName, userId, bIsLoggedIn } = storeToRefs(useAuthStore());
+const { bIsSidebarOpened } = storeToRefs(useSettingsStore());
 
 const bIsSignInModalOpened = ref(false);
 const bIsRegistering = ref(false);
@@ -142,8 +142,9 @@ onMounted(() => {
 
 <template>
   <v-navigation-drawer
-      expand-on-hover
-      rail
+      v-model="bIsSidebarOpened"
+      temporary
+      :location="$vuetify.display.mobile ? 'bottom' : undefined"
   >
     <v-list class="text-left">
       <v-list-item link :title="t('home')" prepend-icon="mdi-home" @click="router.push('/')" />

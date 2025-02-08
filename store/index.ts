@@ -42,6 +42,7 @@ const useSettingsStore = defineStore("settings", function() {
   // Properties
   const lang = ref<string>('');
   const screenMode = ref<string>('');
+  const bIsSidebarOpened = ref<boolean>(false);
 
   // Getter
   const getLanguage = computed(() => lang.value);
@@ -59,6 +60,7 @@ const useSettingsStore = defineStore("settings", function() {
   return {
     lang,
     screenMode,
+    bIsSidebarOpened,
     getLanguage,
     getScreenMode,
     setLanguage,

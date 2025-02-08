@@ -13,13 +13,6 @@ const props = defineProps<{
 }>();
 
 /*
- * Images
- */
-// import UnknownImage from 'public/images/unknownImage.png';
-// import PlatformWindows11Image from 'public/images/platformWindows11.png';
-// import PlatformMacOSImage from 'public/images/platformMac.png';
-
-/*
  * Released Ago
  */
 function releasedAgo(): number {
