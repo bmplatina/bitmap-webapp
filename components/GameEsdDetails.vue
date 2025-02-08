@@ -4,10 +4,6 @@ import { ref } from 'vue'
 import type { Game } from "~/interfaces/Games";
 import { useI18n } from 'vue-i18n';
 import { useDayjs } from "#dayjs";
-import { useDisplay } from "vuetify";
-
-// 반응형 상태 가져오기
-const { mobile } = useDisplay();
 
 const dayjs = useDayjs();
 const { locale, t } = useI18n();
@@ -88,103 +84,63 @@ let bIsDetailModalOpened = ref(false);
       </v-card-title>
       <v-divider />
 
-      <v-row
-          style="height: 80%;"
-          class="d-flex"
-          :class="mobile ? 'flex-column' : 'flex-row'"
-      >
-        <!-- 게임 이미지 및 정보 -->
-        <v-col
-            :cols="mobile ? 12 : 3"
-            class="d-flex flex-column align-items-center"
-        >
-          <div>
-            <v-img
-                class="rounded-xl mx-auto"
-                :src="gameObject.gameImageURL"
-                lazy-src="/images/unknownImage.png"
-                :alt="gameObject.gameTitle"
-                :max-width="240"
-                style="margin-top: calc(4% + 16px);"
-            ></v-img>
-            <div class="d-flex justify-center align-center mt-5 w-100">
-              <h2 class="text-h5 mr-2">{{ gameObject.gameTitle }}</h2>
-              <p v-if="gameObject.isEarlyAccess" class="mb-0">
-                {{ t("early-access") }}
-              </p>
-            </div>
+      <v-row class="d-flex" :class="{ 'flex-column': $vuetify.display.smAndDown, 'flex-row': $vuetify.display.mdAndUp }">
+        <!-- 왼쪽 게임 이미지 & 제목 -->
+        <v-col cols="12" md="3" class="d-flex flex-column align-items-center">
+          <v-img
+              class="rounded-xl mx-auto"
+              :src="gameObject.gameImageURL"
+              lazy-src="/images/unknownImage.png"
+              :alt="gameObject.gameTitle"
+              :max-width="240"
+              style="margin-top: calc(4% + 16px)"
+          ></v-img>
+          <div class="d-flex justify-center align-center mt-5 w-100">
+            <h2 class="text-h5 mr-2">{{ gameObject.gameTitle }}</h2>
+            <p v-if="gameObject.isEarlyAccess" class="mb-0">{{ t('early-access') }}</p>
           </div>
         </v-col>
 
-        <!-- 구분선 (모바일에서는 제거) -->
-        <v-divider
-            v-if="!mobile"
-            vertical
-            style="margin-top: 12px; margin-bottom: 12px"
-        ></v-divider>
+        <!-- 반응형 v-divider (데스크탑에서만 보임) -->
+        <v-divider v-if="$vuetify.display.mdAndUp" vertical class="mx-4"></v-divider>
 
-        <!-- 게임 상세 정보 -->
-        <v-col
-            :cols="mobile ? 12 : 9"
-            class="align-center"
-            style="display: flex; flex-direction: column; height: 100%;"
-        >
-          <div
-              style="flex: 1; overflow-y: auto; margin-top: 4%; margin-bottom: 1%; margin-left: 4%; margin-right: 4%;"
-          >
-            <v-card
-                class="mt-4 pa-3 rounded-xl"
-                :title="t('preview')"
-                variant="tonal"
-                style="white-space: pre-line;"
-            >
+        <!-- 오른쪽 게임 정보 (작은 화면에서는 아래로 배치됨) -->
+        <v-col cols="12" md="9" class="d-flex flex-column align-center">
+          <div style="flex: 1; overflow-y: auto; max-height: 500px; padding: 16px;">
+            <v-card class="mt-4 pa-3 rounded-xl" :title="t('preview')" variant="tonal">
               <iframe
                   :src="`https://youtube.com/embed/${props.gameObject.gameVideoURL}`"
                   class="mx-auto"
                   frameborder="0"
                   allowfullscreen
                   sandbox="allow-scripts allow-same-origin allow-presentation"
-                  style="width: 100%; max-width: 512px; height: 288px; margin-top: 4%;"
+                  style="width: 100%; max-width: 512px; height: 288px; margin-top: 4%"
                   referrerpolicy="no-referrer"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               ></iframe>
             </v-card>
 
-            <v-card
-                class="mt-4 pa-3 rounded-xl"
-                :title="locale === 'ko' ? `${gameObject.gameTitle + t('information-of')}` : `${t('information-of') + gameObject.gameTitle}`"
-                variant="tonal"
-                style="white-space: pre-line;"
-            >
+            <v-card class="mt-4 pa-3 rounded-xl" :title="`${t('information-of')} ${gameObject.gameTitle}`" variant="tonal">
               <v-card-text>
                 <p>{{ t('released-date') }}: {{ formatDate(gameObject.gameReleasedDate, locale) }} ({{ `${releasedAgo()}${t('years-ago')}` }})</p>
                 <p>{{ t('genre') }}: {{ gameObject.gameGenre }}</p>
                 <p>{{ t('developer') }}: {{ gameObject.gameDeveloper }}</p>
                 <p>{{ t('publisher') }}: {{ gameObject.gamePublisher }}</p>
-                <v-divider style="margin-top: 1%; margin-bottom: 1%"/>
+                <v-divider class="my-2"/>
                 <p>{{ t('latest-version') + gameObject.gameLatestRevision }}</p>
                 <a :href="gameObject.gameWebsite">{{ t('official-website') }}</a>
               </v-card-text>
             </v-card>
 
-            <v-card
-                class="mt-4 pa-3 rounded-xl"
-                :title="gameObject.gameHeadline"
-                variant="tonal"
-                style="white-space: pre-line;"
-            >
+            <v-card class="mt-4 pa-3 rounded-xl" :title="gameObject.gameHeadline" variant="tonal">
               <v-card-text>
                 <v-markdown-renderer :source="gameObject.gameDescription" />
               </v-card-text>
             </v-card>
 
             <v-card class="mt-4 pa-3 rounded-xl" :title="t('system-requirements')" variant="tonal">
-              <v-card-text>
-                {{ t('macos-system-requirements').replace(/\\n/g, '\n') }}
-              </v-card-text>
-              <v-card-text>
-                {{ t('windows-system-requirements').replace(/\\n/g, '\n') }}
-              </v-card-text>
+              <v-card-text>{{ t('macos-system-requirements').replace(/\\n/g, '\n') }}</v-card-text>
+              <v-card-text>{{ t('windows-system-requirements').replace(/\\n/g, '\n') }}</v-card-text>
             </v-card>
           </div>
         </v-col>

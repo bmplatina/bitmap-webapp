@@ -34,7 +34,7 @@ onMounted(function () {
   <v-app>
     <v-app-bar app color="primary" density="compact" fixed>
       <v-app-bar-nav-icon @click="toggleSidebarOpenState()" />
-      <v-toolbar-title class="bitmap-title">{{ t('bitmap-store') }}</v-toolbar-title>
+      <v-toolbar-title class="bitmap-title">{{ t('bitmap') }}</v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
     <Sidebar />
