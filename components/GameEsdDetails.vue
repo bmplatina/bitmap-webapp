@@ -96,6 +96,7 @@ let bIsDetailModalOpened = ref(false);
       >
         <!-- 게임 이미지 및 정보 -->
         <v-col
+            v-if="!mobile"
             :cols="mobile ? 0 : 3"
             class="d-flex flex-column align-items-center"
         >
