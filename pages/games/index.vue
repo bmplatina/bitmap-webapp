@@ -2,6 +2,9 @@
 import { onMounted, reactive } from "vue";
 const axios = useNuxtApp().$axios;
 import type { Game } from "~/interfaces/Games";
+import { useI18n } from "vue-i18n";
+
+const { locale, t } = useI18n();
 
 import GameEsdDetails from "~/components/GameEsdDetails.vue";
 
@@ -30,6 +33,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <Head>
+    <Title>{{ t('bitmap-store') }}</Title>
+    <Meta name="description" :content="t('bitmap')" />
+  </Head>
   <v-container fluid>
     <v-row>
       <v-col

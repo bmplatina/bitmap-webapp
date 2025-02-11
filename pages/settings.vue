@@ -50,6 +50,10 @@ onMounted(function () {
 </script>
 
 <template>
+  <Head>
+    <Title>{{ t('bitmap') }}</Title>
+    <Meta name="description" :content="t('bitmap')" />
+  </Head>
   <v-container fluid class="text-left">
     <!--    General Settings-->
     <h1 class="primary-title">{{ t('settings-general') }}</h1>

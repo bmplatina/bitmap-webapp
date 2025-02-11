@@ -1,8 +1,15 @@
 <script setup lang="ts">
-const route = useRoute()
+import { useI18n } from "vue-i18n";
+
+const { locale, t } = useI18n();
+const route = useRoute();
 </script>
 
 <template>
+  <Head>
+    <Title>{{ t('bitmap') }}</Title>
+    <Meta name="description" :content="t('bitmap')" />
+  </Head>
   <div>
     <h1>Nuxt Routing set up successfully!</h1>
     <p>Current route: {{ route.path }}</p>

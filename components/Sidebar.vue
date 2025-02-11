@@ -148,15 +148,25 @@ onMounted(() => {
   >
     <v-list class="text-left">
       <v-list-item link :title="t('home')" prepend-icon="mdi-home" @click="router.push('/')" />
+      <v-list-item
+          href="//wiki.prodbybitmap.com"
+          target="_blank" rel="noopener noreferrer" tag="a"
+          :title="t('wiki')" prepend-icon="mdi-book-education"
+      />
+      <v-list-item
+          href="//developer.prodbybitmap.com"
+          target="_blank" rel="noopener noreferrer" tag="a"
+          title="Bitmap Developer" prepend-icon="mdi-xml"
+      />
       <v-divider />
-      <v-list-item link :title="t('games')" prepend-icon="mdi-gamepad" @click="router.push('/games')" />
+      <v-list-item link :title="t('games')" prepend-icon="mdi-gamepad" to="/games" />
 <!--      <v-list-item link :title="t('game-submit')" prepend-icon="mdi-form-select" @click="bIsLoggedIn ? router.push('/games/submit') : bIsSignInModalOpened = true" />-->
-      <v-list-item link :title="t('game-submit')" prepend-icon="mdi-form-select" @click="router.push('/games/submit')" />
-      <v-list-item link :title="t('games-pending')" prepend-icon="mdi-account-clock-outline" @click="router.push('/games/pending')" />
+      <v-list-item link :title="t('game-submit')" prepend-icon="mdi-form-select" to="/games/submit" />
+      <v-list-item link :title="t('games-pending')" prepend-icon="mdi-account-clock-outline" to="/games/pending" />
       <v-divider />
-      <v-list-item v-if="bIsLoggedIn" link :title="t('accounts')" prepend-icon="mdi-account" @click="router.push('/accounts')" />
+      <v-list-item v-if="bIsLoggedIn" link :title="t('accounts')" prepend-icon="mdi-account" to="/accounts" />
       <v-list-item v-else link :title="t('login')" prepend-icon="mdi-login" @click="bIsSignInModalOpened = true" />
-      <v-list-item link :title="t('settings')" prepend-icon="mdi-cog" @click="router.push('/settings')" />
+      <v-list-item link :title="t('settings')" prepend-icon="mdi-cog" to="/settings" />
     </v-list>
   </v-navigation-drawer>
 
