@@ -147,7 +147,7 @@ onMounted(() => {
       :location="$vuetify.display.mobile ? 'bottom' : undefined"
   >
     <v-list class="text-left">
-      <v-list-item link :title="t('home')" prepend-icon="mdi-home" @click="router.push('/')" />
+      <v-list-item link :title="t('home')" prepend-icon="mdi-home" to="/" />
       <v-list-item
           href="//wiki.prodbybitmap.com"
           target="_blank" rel="noopener noreferrer" tag="a"
