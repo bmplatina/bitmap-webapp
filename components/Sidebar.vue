@@ -147,6 +147,7 @@ onMounted(() => {
       :location="$vuetify.display.mobile ? 'bottom' : undefined"
   >
     <v-list class="text-left">
+      <v-list-subheader>{{ t('bitmap') }}</v-list-subheader>
       <v-list-item link :title="t('home')" prepend-icon="mdi-home" to="/" />
       <v-list-item
           href="//wiki.prodbybitmap.com"
@@ -158,12 +159,19 @@ onMounted(() => {
           target="_blank" rel="noopener noreferrer" tag="a"
           title="Bitmap Developer" prepend-icon="mdi-xml"
       />
+      <v-list-item
+          href="//youtube.com/@prodbybitmap"
+          target="_blank" rel="noopener noreferrer" tag="a"
+          title="Official YouTube" prepend-icon="mdi-youtube"
+      />
       <v-divider />
+      <v-list-subheader>{{ t('bitmap-store') }}</v-list-subheader>
       <v-list-item link :title="t('games')" prepend-icon="mdi-gamepad" to="/games" />
 <!--      <v-list-item link :title="t('game-submit')" prepend-icon="mdi-form-select" @click="bIsLoggedIn ? router.push('/games/submit') : bIsSignInModalOpened = true" />-->
       <v-list-item link :title="t('game-submit')" prepend-icon="mdi-form-select" to="/games/submit" />
       <v-list-item link :title="t('games-pending')" prepend-icon="mdi-account-clock-outline" to="/games/pending" />
       <v-divider />
+      <v-list-subheader>{{ t('accounts') + ' & ' + t('settings') }}</v-list-subheader>
       <v-list-item v-if="bIsLoggedIn" link :title="t('accounts')" prepend-icon="mdi-account" to="/accounts" />
       <v-list-item v-else link :title="t('login')" prepend-icon="mdi-login" @click="bIsSignInModalOpened = true" />
       <v-list-item link :title="t('settings')" prepend-icon="mdi-cog" to="/settings" />
