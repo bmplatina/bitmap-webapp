@@ -164,6 +164,7 @@ onMounted(() => {
           target="_blank" rel="noopener noreferrer" tag="a"
           title="Official YouTube" prepend-icon="mdi-youtube"
       />
+      <v-list-item link :title="t('bitmap-app')" prepend-icon="mdi-application-import" to="/about" />
       <v-divider />
       <v-list-subheader>{{ t('bitmap-store') }}</v-list-subheader>
       <v-list-item link :title="t('games')" prepend-icon="mdi-gamepad" to="/games" />
